@@ -1,24 +1,6 @@
 /*
  * connect4.cpp
- * 
  * Copyright 2020  <pi@raspberrypi>
- * 
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301, USA.
- * 
- * 
  */
 
 
@@ -26,9 +8,88 @@
 
 using namespace std;
 
-int main()
+class board
 {
-	cout << "Hello World!!"<< endl;
-	return 0;
+	public:
+		char let1;
+		char let2;
+		char let_emp;
+
+		char board_vals[6][7];
+		board(char usr1, char usr2, char emp)
+		{
+			let1 = usr1;
+			let2 = usr2;
+			let_emp = emp;
+		}
+		void init_board();
+		void print_board();
+};
+
+void board::init_board()
+{
+	int i, j = 0;
+	int row =6;
+	int col = 7;
+	
+	for(i = 0; i<row;i++)
+	{
+		for(j = 0; j<col; j++)
+		{
+			board_vals[i][j] = let_emp;
+		}
+	}
 }
 
+void board::print_board()
+{
+	int i, j = 0;
+	int row =6;
+	int col = 7;
+	
+	for(i = 0; i<row;i++)
+	{
+		if(i ==0)
+		{
+			cout<< " ";
+			for(j=0; j<col; j++)
+			{
+				cout<< "   "<< j+1<< "";
+			}
+			cout<< endl;
+			cout << "  -";
+			for(j=0; j<col; j++)
+			{
+				cout<< "----";
+			}
+			cout<< endl;
+		}
+		for(j = 0; j<col; j++)
+		{
+			if(j == 0)
+			{
+				cout << i+1<< " |";
+			}
+			cout<< " " << board_vals[i][j] << " |";
+			
+		}
+		cout<< endl;
+		cout << "  -";
+		for(j = 0; j< col; j++)
+		{
+			cout<< "----";		
+		}
+		cout << endl;
+	}
+}
+
+
+int main()
+{
+	char usr1, usr2,empty;
+	
+	board new_board('a', 'b', ' ');
+	new_board.init_board();
+	new_board.print_board();
+	return 0;
+}
