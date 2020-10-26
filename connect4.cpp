@@ -22,8 +22,22 @@ class board
 			let2 = usr2;
 			let_emp = emp;
 		}
+		board(char usr1, char usr2, char emp, char usr_board[6][7])
+		{
+			let1 = usr1;
+			let2 = usr2;
+			let_emp = emp;
+			for(int i = 0; i<6; i++)
+			{
+				for(int j = 0; j<7; j++)
+				{
+					board_vals[i][j] = usr_board[i][j];
+				}
+			}
+		}
 		void init_board();
 		void print_board();
+		void place_piece();
 };
 
 void board::init_board()
@@ -86,10 +100,16 @@ void board::print_board()
 
 int main()
 {
-	char usr1, usr2,empty;
+	char temp_board[6][7] = {
+		{'x','x','x','x','x','x','x'},
+		{'x','x','x','x','x','x','x'},
+		{'x','x','x','x','x','x','x'},
+		{'x','x','x','x','x','x','x'},
+		{'x','x','x','x','x','x','x'},
+		{'x','x','x','x','x','x','x'},
+	};
+	board new_board('x', 'o', ' ', temp_board);
 	
-	board new_board('a', 'b', ' ');
-	new_board.init_board();
 	new_board.print_board();
 	return 0;
 }
