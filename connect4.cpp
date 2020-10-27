@@ -16,17 +16,17 @@ class board
 		char let_emp;
 
 		char board_vals[6][7];
-		board(char usr1, char usr2, char emp)
+		board()
 		{
-			let1 = usr1;
-			let2 = usr2;
-			let_emp = emp;
+			let1 = 'x';
+			let2 = 'o';
+			let_emp = ' ';
 		}
-		board(char usr1, char usr2, char emp, char usr_board[6][7])
+		board(char usr_board[6][7])
 		{
-			let1 = usr1;
-			let2 = usr2;
-			let_emp = emp;
+			let1 = 'x';
+			let2 = 'o';
+			let_emp = ' ';
 			for(int i = 0; i<6; i++)
 			{
 				for(int j = 0; j<7; j++)
@@ -97,6 +97,11 @@ void board::print_board()
 	}
 }
 
+void board:: place_piece(char let, int col)
+{
+	bool flag = false;
+	int place;
+}
 
 int main()
 {
@@ -108,7 +113,7 @@ int main()
 		{'x','x','x','x','x','x','x'},
 		{'x','x','x','x','x','x','x'},
 	};
-	board new_board('x', 'o', ' ', temp_board);
+	board new_board(temp_board);
 	
 	new_board.print_board();
 	return 0;
