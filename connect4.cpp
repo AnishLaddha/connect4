@@ -1,6 +1,6 @@
 /*
  * connect4.cpp
- * Copyright 2020  <pi@raspberrypi>
+ * Copyright 2020
  */
 
 
@@ -14,8 +14,8 @@ class board
 		char let1;
 		char let2;
 		char let_emp;
-
 		char board_vals[6][7];
+		
 		board()
 		{
 			let1 = 'x';
@@ -37,7 +37,8 @@ class board
 		}
 		void init_board();
 		void print_board();
-		void place_piece();
+		int place_piece(char let, int col);
+		bool check_col(int col);
 };
 
 void board::init_board()
@@ -97,11 +98,33 @@ void board::print_board()
 	}
 }
 
-void board:: place_piece(char let, int col)
+int board:: place_piece(char let, int col)
 {
-	bool flag = false;
-	int place;
+	int row_val;
+	for(int i = 5; i>-1; i--)
+	{
+		if(board_vals[i][col] == ' ')
+		{
+			row_val = i;
+			board_vals[i][col] = let;
+			break;
+		}
+	}
+	return row_val;
 }
+
+bool board::check_col(int col)
+{
+
+	for(int i = 0; i< 6; i++)
+	{
+		if(board_vals[i][col] == ' '){
+			return true;
+		}
+	}
+	return false;
+}
+
 
 int main()
 {
