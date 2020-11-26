@@ -128,15 +128,19 @@ bool board::check_col(int col)
 
 int main()
 {
-	char temp_board[6][7] = {
-		{'x','x','x','x','x','x','x'},
-		{'x','x','x','x','x','x','x'},
-		{'x','x','x','x','x','x','x'},
-		{'x','x','x','x','x','x','x'},
-		{'x','x','x','x','x','x','x'},
-		{'x','x','x','x','x','x','x'},
-	};
-	board new_board(temp_board);
+	// char temp_board[6][7] = {
+	// 	{'x','x','x','x','x','x','x'},
+	// 	{'x','x','x','x','x','x','x'},
+	// 	{'x','x','x','x','x','x','x'},
+	// 	{'x','x','x','x','x','x','x'},
+	// 	{'x','x','x','x','x','x','x'},
+	// 	{'x','x','x','x','x','x','x'},
+	// };
+	board new_board;
+	new_board.init_board();
+	new_board.place_piece('x', 3);
+	new_board.place_piece('o', 3);
+	new_board.place_piece('x', 2);
 	
 	new_board.print_board();
 	return 0;
