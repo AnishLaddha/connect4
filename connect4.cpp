@@ -5,6 +5,7 @@
 
 
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -21,6 +22,7 @@ class board
 			let1 = 'x';
 			let2 = 'o';
 			let_emp = ' ';
+			init_board();
 		}
 		board(char usr_board[6][7])
 		{
@@ -38,8 +40,14 @@ class board
 		void init_board();
 		void print_board();
 		int place_piece(char let, int col);
+		void place_piece(char let, int row, int col);
 		bool check_col(int col);
+		bool check_board();
+		void process_play(string data);
+		
 };
+
+
 
 void board::init_board()
 {
@@ -98,7 +106,7 @@ void board::print_board()
 	}
 }
 
-int board:: place_piece(char let, int col)
+int board::place_piece(char let, int col)
 {
 	int row_val;
 	for(int i = 5; i>-1; i--)
@@ -113,6 +121,11 @@ int board:: place_piece(char let, int col)
 	return row_val;
 }
 
+void board::place_piece(char let, int row, int col)
+{
+	board_vals[row][col] = let;
+}
+
 bool board::check_col(int col)
 {
 
@@ -123,6 +136,38 @@ bool board::check_col(int col)
 		}
 	}
 	return false;
+}
+
+bool board::check_board()
+{
+	for(int i = 0; i <= 6; i++){
+		if (board_vals[i][0] == ' '){
+			return true;
+		}
+	}
+	return false;
+}
+
+bool board::process_play(string data)
+{
+	char let = data.at(0);
+	int row = data.at(1)-'0';
+	int col = data.at(2)-'0';
+	char status = data.at(3);
+	place_piece(let, row, col);
+	if(status == '1'){
+		print_board();
+		cout << "DRAW!!"<<endl;
+		return false;
+	} else if(status == '2')
+	{
+		print_board();
+		cout << "YOU LOSE!!"<<endl;
+		return false;
+	}
+	return true;
+	
+
 }
 
 
@@ -137,7 +182,7 @@ int main()
 	// 	{'x','x','x','x','x','x','x'},
 	// };
 	board new_board;
-	new_board.init_board();
+	//new_board.init_board();
 	new_board.place_piece('x', 3);
 	new_board.place_piece('o', 3);
 	new_board.place_piece('x', 2);
