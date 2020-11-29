@@ -44,11 +44,12 @@ class board
 		bool check_col(int col);
 		bool check_board();
 		void process_play(string data);
+		bool check_connect_4();
 		
 };
 
 
-
+//initializes board
 void board::init_board()
 {
 	int i, j = 0;
@@ -64,6 +65,7 @@ void board::init_board()
 	}
 }
 
+//prints board
 void board::print_board()
 {
 	int i, j = 0;
@@ -106,6 +108,7 @@ void board::print_board()
 	}
 }
 
+//places peice within a column
 int board::place_piece(char let, int col)
 {
 	int row_val;
@@ -121,11 +124,13 @@ int board::place_piece(char let, int col)
 	return row_val;
 }
 
+//places piece at exact location
 void board::place_piece(char let, int row, int col)
 {
 	board_vals[row][col] = let;
 }
 
+//checks for empty spaces in col
 bool board::check_col(int col)
 {
 
@@ -138,6 +143,7 @@ bool board::check_col(int col)
 	return false;
 }
 
+//checks if there are still empty spaces on board
 bool board::check_board()
 {
 	for(int i = 0; i <= 6; i++){
@@ -148,27 +154,30 @@ bool board::check_board()
 	return false;
 }
 
+//temporary play processor, idek
 bool board::process_play(string data)
 {
 	char let = data.at(0);
 	int row = data.at(1)-'0';
 	int col = data.at(2)-'0';
 	char status = data.at(3);
-	place_piece(let, row, col);
+	
 	if(status == '1'){
-		print_board();
+		
 		cout << "DRAW!!"<<endl;
 		return false;
 	} else if(status == '2')
 	{
-		print_board();
+		
 		cout << "YOU LOSE!!"<<endl;
 		return false;
 	}
+	place_piece(let, row, col);
 	return true;
 	
 
 }
+
 
 
 int main()
