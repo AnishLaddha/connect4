@@ -103,10 +103,7 @@ int main(int argc, char *argv[])
             cout << "Draw" << endl;
             break;
         }
-
-
-        
-        str data;
+        string data;
         bool temp = false
         while(temp == false)
         {
@@ -129,7 +126,7 @@ int main(int argc, char *argv[])
         player1_board.place_piece(player1_board.let1, stoi(data));
         char mes[4];
         memset(&msg, 0, sizeof(msg));//clear the buffer
-        if(check_connect_4() == true)
+        if(player1_board.check_connect_4() == true)
         {
             cout << "you won!"<< endl;
             mes[0] = '0';
@@ -150,7 +147,12 @@ int main(int argc, char *argv[])
             cout << "Server has quit the session" << endl;
             break;
         }
-        cout << "Server: " << msg << endl;
+        bool val = player1_board.process_play(msg)
+        if(val == false){
+            if(player1_board.check_board()==true){
+                status = 'L'
+            }
+        }
     }
     gettimeofday(&end1, NULL);
     close(clientSd);

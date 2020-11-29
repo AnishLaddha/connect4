@@ -163,16 +163,17 @@ bool board::process_play(string data)
 	char status = data.at(3);
 	
 	if(status == '1'){
-		
+		print_board();
 		cout << "DRAW!!"<<endl;
 		return false;
 	} else if(status == '2')
 	{
-		
+		print_board();
 		cout << "YOU LOSE!!"<<endl;
 		return false;
 	}
 	place_piece(let, row, col);
+	print_board();
 	return true;
 	
 
