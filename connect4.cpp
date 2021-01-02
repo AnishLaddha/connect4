@@ -118,10 +118,11 @@ int board::place_piece(char let, int col)
 		{
 			row_val = i;
 			board_vals[i][col] = let;
-			break;
+			return row_val;
+
 		}
 	}
-	return row_val;
+	return 0;
 }
 
 //places piece at exact location
@@ -147,37 +148,89 @@ bool board::check_col(int col)
 bool board::check_board()
 {
 	for(int i = 0; i <= 6; i++){
-		if (board_vals[i][0] == ' '){
+		if (board_vals[0][i] == ' '){
 			return true;
 		}
 	}
 	return false;
 }
 
-//temporary play processor, idek
-bool board::process_play(string data)
+bool board::check_win(int row, int col)
 {
-	char let = data.at(0);
-	int row = data.at(1)-'0';
-	int col = data.at(2)-'0';
-	char status = data.at(3);
 	
-	if(status == '1'){
-		print_board();
-		cout << "DRAW!!"<<endl;
-		return false;
-	} else if(status == '2')
+}
+bool board::check_row(int row)
+{
+	char val = board_vals[row][0];
+	int count = 0;
+	for(int i=0; i<7;i++)
 	{
-		print_board();
-		cout << "YOU LOSE!!"<<endl;
-		return false;
+		if(val == board_vals[row][i])
+		{
+			count++;
+		}
+		else
+		{
+			val = board_vals[row][i]
+			count=1;
+		}
+		if(count==4)
+		{
+			return true;
+		}
 	}
-	place_piece(let, row, col);
-	print_board();
-	return true;
+	return false;
+}
+bool board::check_col(int col)
+{
+	har val = board_vals[0][col];
+	int count = 0;
+	for(int i=0; i<7;i++)
+	{
+		if(val == board_vals[i][col])
+		{
+			count++;
+		}
+		else
+		{
+			val = board_vals[i][col]
+			count=1;
+		}
+		if(count==4)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+bool board::check_diag(int row, int col)
+{
+	
+}
+// //temporary play processor, idek
+// bool board::process_play(string data)
+// {
+// 	char let = data.at(0);
+// 	int row = data.at(1)-'0';
+// 	int col = data.at(2)-'0';
+// 	char status = data.at(3);
+	
+// 	if(status == '1'){
+// 		print_board();
+// 		cout << "DRAW!!"<<endl;
+// 		return false;
+// 	} else if(status == '2')
+// 	{
+// 		print_board();
+// 		cout << "YOU LOSE!!"<<endl;
+// 		return false;
+// 	}
+// 	place_piece(let, row, col);
+// 	print_board();
+// 	return true;
 	
 
-}
+// }
 
 
 
