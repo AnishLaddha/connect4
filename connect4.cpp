@@ -24,28 +24,30 @@ class board
 			let_emp = ' ';
 			init_board();
 		}
-		board(char usr_board[6][7])
-		{
-			let1 = 'x';
-			let2 = 'o';
-			let_emp = ' ';
-			for(int i = 0; i<6; i++)
-			{
-				for(int j = 0; j<7; j++)
-				{
-					board_vals[i][j] = usr_board[i][j];
-				}
-			}
-		}
+		// board(char usr_board[6][7])
+		// {
+		// 	let1 = 'x';
+		// 	let2 = 'o';
+		// 	let_emp = ' ';
+		// 	for(int i = 0; i<6; i++)
+		// 	{
+		// 		for(int j = 0; j<7; j++)
+		// 		{
+		// 			board_vals[i][j] = usr_board[i][j];
+		// 		}
+		// 	}
+		// }
 		void init_board();
 		void print_board();
+		void print_board2();
 		int place_piece(char let, int col);
 		void place_piece(char let, int row, int col);
-		bool check_col(int col);
+		bool check_col_emp(int col);
 		bool check_board();
-		void process_play(string data);
-		bool check_connect_4();
-		
+		bool check_win(int row, int col);
+		bool check_row(int row);
+		bool check_col(int col);
+		bool check_diag(int row, int col);
 };
 
 
@@ -65,7 +67,7 @@ void board::init_board()
 	}
 }
 
-//prints board
+//prints board, num above
 void board::print_board()
 {
 	int i, j = 0;
@@ -108,6 +110,55 @@ void board::print_board()
 	}
 }
 
+//prints board, num under
+void board::print_board2()
+{
+	int i, j = 0;
+	int row =6;
+	int col = 7;
+	
+	for(i = 0; i<row;i++)
+	{
+		if(i==0)
+		{
+			cout<<"  ";
+			for(j=0; j<col; j++)
+			{
+				cout<< "----";
+			}
+			cout<<"-"<<endl;
+
+		}
+		for(j = 0; j<col; j++)
+		{
+			if(j == 0)
+			{
+				cout << i+1<< " |";
+			}
+			cout<< " " << board_vals[i][j] << " |";
+			
+		}
+		cout<< endl;
+		cout << "  -";
+		for(j = 0; j< col; j++)
+		{
+			cout<< "----";		
+		}
+		cout << endl;
+		if(i ==row-1)
+		{
+			cout<< " ";
+			for(j=0; j<col; j++)
+			{
+				cout<< "   "<< j+1<< "";
+			}
+			cout<< endl;
+			
+
+			
+		}
+	}
+}
 //places peice within a column
 int board::place_piece(char let, int col)
 {
@@ -132,7 +183,7 @@ void board::place_piece(char let, int row, int col)
 }
 
 //checks for empty spaces in col
-bool board::check_col(int col)
+bool board::check_col_emp(int col)
 {
 
 	for(int i = 0; i< 6; i++)
@@ -158,20 +209,23 @@ bool board::check_board()
 bool board::check_win(int row, int col)
 {
 	
+	return (check_row(row) || check_col(col) || check_diag(row, col));
 }
 bool board::check_row(int row)
 {
+	
 	char val = board_vals[row][0];
 	int count = 0;
 	for(int i=0; i<7;i++)
-	{
-		if(val == board_vals[row][i])
+	{	
+		
+		if(val == board_vals[row][i] && val != ' ')
 		{
 			count++;
 		}
 		else
 		{
-			val = board_vals[row][i]
+			val = board_vals[row][i];
 			count=1;
 		}
 		if(count==4)
@@ -183,17 +237,17 @@ bool board::check_row(int row)
 }
 bool board::check_col(int col)
 {
-	har val = board_vals[0][col];
+	char val = board_vals[0][col];
 	int count = 0;
 	for(int i=0; i<7;i++)
 	{
-		if(val == board_vals[i][col])
+		if(val == board_vals[i][col] && val != ' ')
 		{
 			count++;
 		}
 		else
 		{
-			val = board_vals[i][col]
+			val = board_vals[i][col];
 			count=1;
 		}
 		if(count==4)
@@ -205,34 +259,115 @@ bool board::check_col(int col)
 }
 bool board::check_diag(int row, int col)
 {
-	
+	return false;
 }
-// //temporary play processor, idek
-// bool board::process_play(string data)
-// {
-// 	char let = data.at(0);
-// 	int row = data.at(1)-'0';
-// 	int col = data.at(2)-'0';
-// 	char status = data.at(3);
-	
-// 	if(status == '1'){
-// 		print_board();
-// 		cout << "DRAW!!"<<endl;
-// 		return false;
-// 	} else if(status == '2')
-// 	{
-// 		print_board();
-// 		cout << "YOU LOSE!!"<<endl;
-// 		return false;
-// 	}
-// 	place_piece(let, row, col);
-// 	print_board();
-// 	return true;
-	
 
-// }
+void Clear()
+{
+	system("clear");
+}
 
+void game()
+{
+	int usr_col;
+	int usr_row;
+	Clear();
+	cout<<"Welcome to Connect4. Player 1 will be x, and Player 2 will be o."<< endl;
+	bool col_works = false;
+	board game_board;
+	game_board.init_board();
+	bool game_cont = true;
+	char game_stat;
+	bool first = true;
+	//game stat: 1 - p1 win; 2 - p2 win; d - draw;
+	while(game_cont == true){
+		if(first)
+		{
+			first = false;
+		}
+		else
+		{
+			Clear();
+		}
+		
+		game_board.print_board();
+		col_works=false;
+		while(!col_works){
+			cout << "Player 1: Enter a valid column: ";
+			while (!(cin >> usr_col))
+			{
+				cout << "Wrong input. Please, try again: ";
+				cin.clear();
+			}
+			usr_col--;
+			if(game_board.check_col_emp(usr_col))
+			{
+				col_works=true;
+			}
+		}
+		
+		usr_row = game_board.place_piece(game_board.let1, usr_col);
+		if (game_board.check_win(usr_row, usr_col))
+		{
+			game_stat = '1';
+			game_cont = false;
+			break;
+		}
 
+		if(!game_board.check_board())
+		{
+			game_stat = 'd';
+			game_cont = false;
+			break;
+		}
+
+		Clear();
+
+		game_board.print_board();
+		col_works=false;
+		while(!col_works){
+			cout << "Player 2: Enter a valid column: ";
+			while (!(cin >> usr_col))
+			{
+				cout << "Wrong input. Please, try again: ";
+				cin.clear();
+			}
+			usr_col--;
+			if(game_board.check_col_emp(usr_col))
+			{
+				col_works=true;
+			}
+		}
+		usr_row = game_board.place_piece(game_board.let2, usr_col);
+		if (game_board.check_win(usr_row, usr_col))
+		{
+			game_stat = '2';
+			game_cont = false;
+			break;
+		}
+		if(!game_board.check_board())
+		{
+			game_stat = 'd';
+			game_cont = false;
+			break;
+		}
+	}
+	Clear();
+	game_board.print_board();
+	if(game_stat == '1')
+	{
+		cout << "Player 1 wins!"<< endl;
+	}
+	else if(game_stat == '2')
+	{
+		cout<<"Player 2 wins!"<<endl;
+	}
+	else
+	{
+		cout<< "Draw!"<<endl;
+	}
+
+}
 
 int main()
 {
@@ -244,12 +379,15 @@ int main()
 	// 	{'x','x','x','x','x','x','x'},
 	// 	{'x','x','x','x','x','x','x'},
 	// };
-	board new_board;
-	//new_board.init_board();
-	new_board.place_piece('x', 3);
-	new_board.place_piece('o', 3);
-	new_board.place_piece('x', 2);
+	// board new_board;
+	// new_board.init_board();
+	// new_board.place_piece('x', 3);
+	// new_board.place_piece('o', 3);
+	// new_board.place_piece('x', 2);
 	
-	new_board.print_board();
+	// new_board.print_board();
+
+	game();
+
 	return 0;
 }
