@@ -327,6 +327,50 @@ bool board::check_backward_diag(int row, int col)
 }
 bool board::check_forward_diag(int row, int col)
 {
+	vector<char> forward_top;
+	int i = row;
+	int j = col;
+	while(i>=0 && j<7)
+	{
+		forward_top.push_back(board_vals[i][j]);
+		i--;
+		j++;
+	}
+	
+	vector<char> forward_bottom;
+	i=row;
+	j=col;
+	while(i<6 && j>=0)
+	{
+		forward_bottom.push_back(board_vals[i][j]);
+		i++;
+		j--;
+	}
+	reverse(forward_bottom.begin(), forward_bottom.end());
+	vector<char> forward;
+	forward.reserve(forward_top.size()+forward_bottom.size());
+	forward.insert(forward.end(), forward_bottom.begin(), forward_bottom.end());
+	forward.insert(forward.end(), forward_top.begin(), forward_top.end());
+	char val = forward[0];
+	int count = 0;
+	for(int a=0; a<forward.size();a++)
+	{
+		if(val == forward[a] && val!=' ')
+		{
+			count++;
+		}
+		else
+		{
+			val = forward[a];
+			count =1;
+		}
+		if(count == 5)
+		{
+			return true;
+		}
+		cout<<count<< endl;
+	}
+	
 	return false;
 }
 
