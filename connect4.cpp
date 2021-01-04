@@ -97,7 +97,18 @@ void board::print_board()
 			{
 				cout << i+1<< " |";
 			}
-			cout<< " " << board_vals[i][j] << " |";
+			if(board_vals[i][j] == 'x')
+			{
+				cout<< " " <<"\033[1;31m"<< board_vals[i][j] << "\033[0m"<< " |";
+			} else if(board_vals[i][j] == 'o')
+			{
+				cout<< " " <<"\033[1;33m"<< board_vals[i][j] << "\033[0m"<< " |";
+			} else
+			{
+				cout<< " " << board_vals[i][j] << " |";
+			}
+			
+			
 			
 		}
 		cout<< endl;
@@ -356,11 +367,11 @@ void game()
 	game_board.print_board();
 	if(game_stat == '1')
 	{
-		cout << "Player 1 wins!"<< endl;
+		cout <<"\033[1;31m" <<"Player 1 wins!"<< "\033[0m\n";
 	}
 	else if(game_stat == '2')
 	{
-		cout<<"Player 2 wins!"<<endl;
+		cout<< "\033[1;33m"<< "Player 2 wins!" << "\033[0m\n";
 	}
 	else
 	{
@@ -387,7 +398,16 @@ int main()
 	
 	// new_board.print_board();
 
-	game();
+	
+	char cont='y';
+	while(cont=='y'||cont == 'Y')
+	{
+		
+		game();
+		cout<< "Play Again? (Y/N)?: ";
+		cin>>cont;
+	}
+	
 
 	return 0;
 }
