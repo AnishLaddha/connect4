@@ -6,6 +6,8 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -48,6 +50,8 @@ class board
 		bool check_row(int row);
 		bool check_col(int col);
 		bool check_diag(int row, int col);
+		bool check_forward_diag(int row, int col);
+		bool check_backward_diag(int row, int col);
 };
 
 
@@ -269,6 +273,59 @@ bool board::check_col(int col)
 	return false;
 }
 bool board::check_diag(int row, int col)
+{
+	
+	return (check_forward_diag(row, col) || check_backward_diag(row,col));
+}
+bool board::check_backward_diag(int row, int col)
+{
+	vector<char> backward_bottom;
+	int i = row;
+	int j = col;
+	while(i < 6 && j <7)
+	{
+		backward_bottom.push_back(board_vals[i][j]);
+		i++;
+		j++;
+	}
+	
+	
+	vector<char> backward_top;
+	i = row;
+	j = col;
+	while(i>=0 && j>= 0)
+	{
+		backward_top.push_back(board_vals[i][j]);
+		i--;
+		j--;
+	}
+	reverse(backward_top.begin(), backward_top.end());
+	vector<char> backward;
+	backward.reserve(backward_top.size()+backward_bottom.size());
+	backward.insert(backward.end(), backward_top.begin(), backward_top.end());
+	backward.insert(backward.end(), backward_bottom.begin(), backward_bottom.end());
+	char val = backward[0];
+	int count=0;
+	for(int a = 0; a<backward.size(); a++)
+	{
+		if(val==backward[a] && val!=' ')
+		{
+			count++;
+		}
+		else
+		{
+			val = backward[a];
+			count = 1;
+		}
+		if(count == 5)
+		{
+			return true;
+		}
+	}
+	
+	return false;
+}
+bool board::check_forward_diag(int row, int col)
 {
 	return false;
 }
